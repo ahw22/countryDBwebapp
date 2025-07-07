@@ -13,6 +13,7 @@ public class CountryViewDTO {
     private int areaKm2;
     private int inhabitants;
     private String continentName;
+    private String continentShortName;
     private String capitalName;
     private int capitalPopulation;
 }
