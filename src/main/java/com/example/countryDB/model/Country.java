@@ -11,11 +11,11 @@ import lombok.*;
 @Builder
 @Table(name = "Country")
 public class Country {
-
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
     private String name;
+
     private String domain;
     private int areaKm2;
     private int inhabitants;
@@ -27,4 +27,15 @@ public class Country {
     @OneToOne
     @JoinColumn(name = "capital_id")
     private Capital capital;
+
+    @Override
+    public String toString() {
+        return "Country{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", domain='" + domain + '\'' +
+                ", areaKm2=" + areaKm2 +
+                ", inhabitants=" + inhabitants +
+                '}';
+    }
 }
