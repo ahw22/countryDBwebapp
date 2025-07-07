@@ -19,13 +19,12 @@ public class Country {
     private String domain;
     private int areaKm2;
     private int inhabitants;
-
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "continent_id", nullable = false)
     private Continent continent ;
 
-    @OneToOne
-    @JoinColumn(name = "capital_id")
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "capital_id", nullable = false)
     private Capital capital;
 
     @Override
