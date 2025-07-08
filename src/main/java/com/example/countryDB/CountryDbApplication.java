@@ -15,7 +15,6 @@ import org.springframework.context.event.EventListener;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @SpringBootApplication
 public class CountryDbApplication {
@@ -172,7 +171,6 @@ public class CountryDbApplication {
         egypt.addContinent(africa);
         egypt.addContinent(asia);
 
-        // Save all countries
         countryRepository.saveAll(List.of(
                 austria, germany, sweden, estonia, canada, russia, egypt
         ));

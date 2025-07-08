@@ -1,6 +1,5 @@
 package com.example.countryDB.dto;
 
-import com.example.countryDB.model.Continent;
 import lombok.*;
 
 import java.util.Set;

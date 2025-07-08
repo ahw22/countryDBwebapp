@@ -9,7 +9,6 @@ import com.example.countryDB.model.Country;
 import com.example.countryDB.repository.CapitalRepository;
 import com.example.countryDB.repository.ContinentRepository;
 import com.example.countryDB.repository.CountryRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,7 +47,6 @@ public class CountryService {
 
     @Transactional
     public void save(CountryFormDTO dto) {
-        // Fetch all continents by IDs
         Set<Continent> continents = new HashSet<>();
         if (dto.getContinentIds() != null && !dto.getContinentIds().isEmpty()) {
             for (Integer continentId : dto.getContinentIds()) {
@@ -103,18 +101,11 @@ public class CountryService {
     @Transactional
     public void deleteCountry(int id) {
         try {
-            // First, find the country
             Optional<Country> countryOpt = countryRepository.findById(id);
             if (countryOpt.isPresent()) {
                 Country country = countryOpt.get();
-
-                // Clear continent associations first
                 country.removeAllContinents();
-
-                // Save to persist the cleared associations
                 countryRepository.saveAndFlush(country);
-
-                // Now delete the country (capital will be deleted automatically due to cascade)
                 countryRepository.deleteById(id);
             }
         } catch (Exception e) {
