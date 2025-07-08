@@ -1,9 +1,12 @@
 package com.example.countryDB.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @AllArgsConstructor
@@ -21,7 +24,9 @@ public class Continent {
     private String name;
     private String shortName;
 
-    @OneToMany(mappedBy = "continent")
-    private List<Country> countries;
+    @ManyToMany(mappedBy = "continents", fetch = FetchType.LAZY)
+    @JsonIgnore
+    @Builder.Default
+    private Set<Country> countries = new HashSet<>();
 
 }

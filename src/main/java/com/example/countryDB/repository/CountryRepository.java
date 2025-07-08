@@ -1,6 +1,5 @@
 package com.example.countryDB.repository;
 
-import com.example.countryDB.model.Capital;
 import com.example.countryDB.model.Country;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -12,13 +11,13 @@ import java.util.Optional;
 public interface CountryRepository extends JpaRepository<Country, Integer> {
     Country findByName(String name);
 
-    @Query("SELECT c FROM Country c " +
-            "JOIN FETCH c.continent " +
+    @Query("SELECT DISTINCT c FROM Country c " +
+            "JOIN FETCH c.continents " +
             "JOIN FETCH c.capital")
     List<Country> findAllWithJoins();
 
     @Query("SELECT c FROM Country c " +
-            "JOIN FETCH c.continent " +
+            "JOIN FETCH c.continents " +
             "JOIN FETCH c.capital " +
             "WHERE c.id = :id")
     Optional<Country> findByIdWithJoins(@Param("id") int id);
