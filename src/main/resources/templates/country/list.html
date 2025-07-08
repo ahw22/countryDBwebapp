@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Countries</title>
+    <style>
+        .continent-list {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .continent-list li {
+            margin: 2px 0;
+            padding: 2px 6px;
+            background-color: #f0f0f0;
+            border-radius: 3px;
+            display: inline-block;
+            margin-right: 5px;
+            margin-bottom: 3px;
+        }
+        .continent-cell {
+            min-width: 150px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+<h1>All Countries</h1>
+
+<a th:href="@{/countries/new}">Add New Country</a>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Domain</th>
+        <th>Area (km²)</th>
+        <th>Inhabitants</th>
+        <th>Continents</th>
+        <th>Capital</th>
+        <th>Capital Population</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="country : ${countries}">
+        <td th:text="${country.name}"></td>
+        <td th:text="${country.domain}"></td>
+        <td th:text="${country.areaKm2}"></td>
+        <td th:text="${country.inhabitants}"></td>
+        <td class="continent-cell">
+            <!-- Option 1: Display as a styled list (recommended) -->
+            <ul class="continent-list" th:if="${country.continents != null and !country.continents.isEmpty()}">
+                <li th:each="continent : ${country.continents}"
+                    th:text="${continent.name} + ' (' + ${continent.shortName} + ')'"></li>
+            </ul>
+
+            <!-- Fallback for no continents -->
+            <span th:if="${country.continents == null or country.continents.isEmpty()}" class="no-continents">
+                No continents assigned
+            </span>
+        </td>
+        <td th:text="${country.capitalName}"></td>
+        <td th:text="${country.capitalPopulation}"></td>
+        <td>
+            <a th:href="@{'/countries/' + ${country.id} + '/edit'}">Edit</a>
+            <form th:action="@{'/countries/' + ${country.id} + '/delete'}" method="post" style="display:inline;">
+                <button type="submit" onclick="return confirm('Are you sure?')">Delete</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

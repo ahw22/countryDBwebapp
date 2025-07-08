@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${country.id == null} ? 'Create Country' : 'Edit Country'">Country Form</title>
+    <style>
+        .continent-selection {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .continent-checkbox {
+            margin: 5px 0;
+            display: flex;
+            align-items: center;
+        }
+        .continent-checkbox label {
+            margin-left: 8px;
+            font-weight: normal;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input, .form-group select {
+            width: 300px;
+            padding: 5px;
+        }
+        .buttons {
+            margin-top: 20px;
+        }
+        .buttons button, .buttons a {
+            padding: 10px 20px;
+            margin-right: 10px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .buttons button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .buttons a {
+            background-color: #6c757d;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<h1 th:text="${country.id == null} ? 'Create New Country' : 'Edit Country'"></h1>
+
+<form th:action="@{/countries/save}" th:object="${country}" method="post">
+    <input type="hidden" th:field="*{id}" />
+
+    <div class="form-group">
+        <label>Name:</label>
+        <input type="text" th:field="*{name}" required/>
+    </div>
+
+    <div class="form-group">
+        <label>Domain:</label>
+        <input type="text" th:field="*{domain}" required/>
+    </div>
+
+    <div class="form-group">
+        <label>Area (km²):</label>
+        <input type="number" th:field="*{areaKm2}" max="2147482999"  required/>
+    </div>
+
+    <div class="form-group">
+        <label>Inhabitants:</label>
+        <input type="number" th:field="*{inhabitants}" max="100000000000" required/>
+    </div>
+
+    <div class="form-group">
+        <label>Continents:</label>
+        <div class="continent-selection">
+            <div th:each="continent : ${continents}" class="continent-checkbox">
+                <input type="checkbox"
+                       th:id="'continent_' + ${continent.id}"
+                       th:value="${continent.id}"
+                       name="continentIds"
+                       th:checked="${country.continentIds != null and country.continentIds.contains(continent.id)}"/>
+                <label th:for="'continent_' + ${continent.id}"
+                       th:text="${continent.name + ' (' + continent.shortName + ')'}"></label>
+            </div>
+        </div>
+        <small style="color: #666;">Select one or more continents for this country</small>
+    </div>
+
+    <h3>Capital Information</h3>
+
+    <div class="form-group">
+        <label>Capital Name:</label>
+        <input type="text" th:field="*{capitalName}" required/>
+    </div>
+
+    <div class="form-group">
+        <label>Capital Population:</label>
+        <input type="number" th:field="*{capitalPopulation}" max="100000000000" required/>
+    </div>
+
+    <div class="buttons">
+        <button type="submit">Save</button>
+        <a th:href="@{/countries}">Cancel</a>
+    </div>
+</form>
+
+
+</body>
+</html>
