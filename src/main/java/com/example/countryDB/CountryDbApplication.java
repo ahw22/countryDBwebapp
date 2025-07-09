@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.EventListener;
 
 import java.util.HashSet;
@@ -32,7 +31,6 @@ public class CountryDbApplication {
         SpringApplication.run(CountryDbApplication.class, args);
     }
 
-    @Profile("development")
     @EventListener(ApplicationReadyEvent.class)
     private void initDatabaseData() {
         List<Continent> continents = continentRepository.saveAll(List.of(
