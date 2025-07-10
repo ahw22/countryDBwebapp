@@ -48,7 +48,7 @@ public class CountryService {
     @Transactional
     public void save(CountryFormDTO dto) {
         Set<Continent> continents = new HashSet<>();
-        if (dto.getContinentIds() != null && !dto.getContinentIds().isEmpty()) {
+        if (dto.isContentIdsNotEmpty()) {
             for (Integer continentId : dto.getContinentIds()) {
                 Continent continent = continentRepository.findById(continentId)
                         .orElseThrow(() -> new RuntimeException("Continent not found: " + continentId));
@@ -65,7 +65,7 @@ public class CountryService {
 
         Country country;
 
-        if (dto.getId() != null) {
+        if (dto.isCountryIsInDB()) {
             country = countryRepository.findById(dto.getId())
                     .orElseThrow(() -> new RuntimeException("Country not found"));
 
