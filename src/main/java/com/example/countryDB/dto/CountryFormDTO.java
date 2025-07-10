@@ -18,4 +18,12 @@ public class CountryFormDTO {
     private Set<Integer> continentIds;
     private String capitalName;
     private int capitalPopulation;
+
+    public Boolean isCountryIsInDB() {
+        return id != null;
+    }
+
+    public Boolean isContentIdsNotEmpty() {
+        return continentIds != null && !continentIds.isEmpty();
+    }
 }
