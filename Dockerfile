@@ -1,5 +1,5 @@
 # Start from a lightweight Java image
-FROM openjdk:26-slim-bullseye
+FROM amazoncorretto:24.0.1-alpine3.21
 
 # Create a directory inside the container
 WORKDIR /app
